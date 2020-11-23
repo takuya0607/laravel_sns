@@ -44,6 +44,9 @@ class ArticleController extends Controller
             ],
         ];
 
+        // 第二引数の'articles'は任意での自作キー
+        // キーに対してのvalueを$articlesで指定している
+        // これによりbladeで'articles'が使用できる。
         return view('articles.index', ['articles' => $articles]);
     }
 }

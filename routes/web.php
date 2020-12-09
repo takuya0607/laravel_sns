@@ -13,8 +13,10 @@
 
 Auth::routes();
 Route::get('/', 'ArticleController@index')->name('articles.index');
-// except = 指定のアクションを覗く事ができる
+// except = 指定のアクションを除く事ができる
 // 今回articleのindexが重複するため、'/'を優先した
 // middlewareはクライアントからのリクエストに対して、コントローラーで処理する前に処理を行う作業。
 // 'auth'をつける事で、ユーザーがログイン済みかをチェックする。
-Route::resource('/articles', 'ArticleController')->except(['index'])->middleware('auth');
+Route::resource('/articles', 'ArticleController')->except(['index','show'])->middleware('auth');
+// onlyを付ける事で、そのアクションのみを指定できる
+Route::resource('/articles', 'ArticleController')->only(['show']);

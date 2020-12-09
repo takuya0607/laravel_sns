@@ -9,7 +9,12 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-    //
+    public function __construct()
+    {
+      // authorizeResourceメソッドを使用すると,ポリシーとアクションメソッドの関係性が成り立つ
+      // 第一引数にモデルのクラス名、第二引数にモデルのIDがセットされるルーティングのパラメーター名を指定
+        $this->authorizeResource(Article::class, 'article');
+    }
 
     // 記事一覧画面の表示
     public function index()
@@ -47,5 +52,29 @@ class ArticleController extends Controller
         $article->save();
         // 投稿保存後、redirectでarticle.indexへ遷移させる
         return redirect()->route('articles.index');
+    }
+
+    public function edit(Article $article)
+    {
+      // storeアクションで使用した$articleを、viewで'article'として使用可能にする
+        return view('articles.edit', ['article' => $article]);
+    }
+
+    public function update(ArticleRequest $request, Article $article)
+    {
+        $article->fill($request->all())->save();
+        return redirect()->route('articles.index');
+    }
+
+
+    public function destroy(Article $article)
+    {
+        $article->delete();
+        return redirect()->route('articles.index');
+    }
+
+    public function show(Article $article)
+    {
+        return view('articles.show', ['article' => $article]);
     }
 }

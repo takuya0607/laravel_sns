@@ -56,6 +56,8 @@ return [
     */
 
     'from' => [
+        // 第二引数には、第一引数の環境変数がなかった場合の、デフォルト値
+        // 環境変数に関してはenvファイルに記載
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],

@@ -63,4 +63,19 @@
       {{ $article->body }}
     </div>
   </div>
+  <div class="card-body pt-0 pb-2 pl-3">
+    <div class="card-text">
+      <!-- initial-is-liked-byはv-bind:initial-is-liked-byの省略形 -->
+      <!-- jsonを使用する事で、結果を値ではなく文字列でVueに渡している -->
+      <!-- authorized=承認する ユーザーがログインしている状態のみを許容 -->
+      <!-- endpointを新たに定義し、route関数で取得したURLを渡している -->
+      <article-like
+        :initial-is-liked-by='@json($article->isLikedBy(Auth::user()))'
+        :initial-count-likes='@json($article->count_likes)'
+        :authorized='@json(Auth::check())'
+        endpoint="{{ route('articles.like', ['article' => $article]) }}"
+      >
+      </article-like>
+    </div>
+  </div>
 </div>

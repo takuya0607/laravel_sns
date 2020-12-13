@@ -77,4 +77,32 @@ class ArticleController extends Controller
     {
         return view('articles.show', ['article' => $article]);
     }
+
+    // いいねに関する記述
+    public function like(Request $request, Article $article)
+    {
+      // この記事モデルと、リクエストを送信したユーザーの両者を紐づけるlikesテーブルのレコードが新規登録される
+      // detachは削除を表すメソッドで、二重のいいねを防止するために記述している
+      // 一旦削除をする事で、過去にいいねをしていても削除→いいねとなるので重複を避けられる
+        $article->likes()->detach($request->user()->id);
+        $article->likes()->attach($request->user()->id);
+
+        return [
+          // どの記事へのいいね、あるいはいいね解除が成功したかがわかるよう、記事モデルのidをレスポンスするようにしている
+            'id' => $article->id,
+          // likesテーブル更新後の、その記事のいいね数もレスポンスしている
+            'countLikes' => $article->count_likes,
+        ];
+    }
+
+    // いいねの解除に関する記述
+    public function unlike(Request $request, Article $article)
+    {
+        $article->likes()->detach($request->user()->id);
+
+        return [
+            'id' => $article->id,
+            'countLikes' => $article->count_likes,
+        ];
+    }
 }

@@ -1,0 +1,40 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateLikesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('likes', function (Blueprint $table) {
+            // いいねを識別するid
+            $table->bigIncrements('id');
+            // いいねしたユーザーのid
+            $table->bigInteger('user_id');
+            // user_idカラムは、usersテーブルのidカラムを参照するという宣言
+            // cascadeを付ける事で、紐づいたuserが削除されたら、likeテーブルからも削除される
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // いいねされた記事のid
+            $table->bigInteger('article_id');
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('likes');
+    }
+}

@@ -16,6 +16,7 @@ class Article extends Model
 
     public function user(): BelongsTo
     {
+      // $thisはArticleクラスのインスタンス
         return $this->belongsTo('App\User');
     }
 
@@ -44,4 +45,10 @@ class Article extends Model
       // $this->likesにより、記事モデルからlikesテーブル経由で紐付いているユーザーモデルがコレクションで返る
         return $this->likes->count();
     }
+
+    public function tags(): BelongsToMany
+      {
+        // 第二引数に中間テーブル名を記載するが、今回は単数名article_tagなので、省略が可能
+          return $this->belongsToMany('App\Tag')->withTimestamps();
+      }
 }

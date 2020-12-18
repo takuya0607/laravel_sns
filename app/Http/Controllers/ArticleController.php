@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Tag;
 // Requestの使用宣言
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Http\Request;
@@ -30,7 +31,13 @@ class ArticleController extends Controller
     // 記事投稿作成画面の表示
     public function create()
     {
-        return view('articles.create');
+        $allTagNames = Tag::all()->map(function ($tag) {
+            return ['text' => $tag->name];
+        });
+
+        return view('articles.create', [
+            'allTagNames' => $allTagNames,
+        ]);
     }
 
     // 記事の保存に関する処理
@@ -51,18 +58,51 @@ class ArticleController extends Controller
         // 最後にモデルのsaveメソッドを使用し、articleテーブルにデータを保存する
         $article->save();
         // 投稿保存後、redirectでarticle.indexへ遷移させる
+
+        // タグに関する記述
+        // eachで要素を一つずつ取得している
+        // クロージャーの第一引数にはコレクションの値が、第二引数にはコレクションのキーが入る
+        // ここでは値を任意で$tagNameとし、キーは不要なので省略している
+        // use ($article)とあるのは、クロージャの中の処理で変数$articleを使うため
+        // 通常クロージャの中では、クロージャの外側で定義されている変数を通常使用できないため
+        $request->tags->each(function ($tagName) use ($article) {
+        // firstOrCreateメソッドは、引数として渡した「カラム名と値のペア」を持つレコードがテーブルに存在するかどうかを探す
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            // 記事とタグの紐付け
+            $article->tags()->attach($tag);
+        });
         return redirect()->route('articles.index');
     }
 
     public function edit(Article $article)
     {
+        $tagNames = $article->tags->map(function ($tag) {
+            return ['text' => $tag->name];
+        });
+
+        $allTagNames = Tag::all()->map(function ($tag) {
+            return ['text' => $tag->name];
+        });
       // storeアクションで使用した$articleを、viewで'article'として使用可能にする
-        return view('articles.edit', ['article' => $article]);
+        return view('articles.edit', [
+            'article' => $article,
+            'tagNames' => $tagNames,
+            'allTagNames' => $allTagNames,
+        ]);
     }
 
     public function update(ArticleRequest $request, Article $article)
     {
         $article->fill($request->all())->save();
+
+        // detachメソッドを引数無しで使うと、そのリレーションを紐付ける中間テーブルのレコードが全削除される
+        // 一旦全削除する事で、複数のタグから一つのみ削除して更新する場合にも対応できる
+        $article->tags()->detach();
+        $request->tags->each(function ($tagName) use ($article) {
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            $article->tags()->attach($tag);
+        });
+
         return redirect()->route('articles.index');
     }
 

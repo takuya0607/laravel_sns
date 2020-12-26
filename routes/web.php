@@ -12,6 +12,18 @@
 */
 
 Auth::routes();
+
+// {provider}の部分は、利用する他サービスの名前を入れることを想定している
+Route::prefix('login')->name('login.')->group(function () {
+    Route::get('/{provider}', 'Auth\LoginController@redirectToProvider')->name('{provider}');
+    Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('{provider}.callback');
+});
+
+Route::prefix('register')->name('register.')->group(function () {
+    Route::get('/{provider}', 'Auth\RegisterController@showProviderUserRegistrationForm')->name('{provider}');
+    Route::post('/{provider}', 'Auth\RegisterController@registerProviderUser')->name('{provider}');
+});
+
 Route::get('/', 'ArticleController@index')->name('articles.index');
 // except = 指定のアクションを除く事ができる
 // 今回articleのindexが重複するため、'/'を優先した
@@ -38,7 +50,7 @@ Route::prefix('users')->name('users.')->group(function () {
     Route::get('/{name}', 'UserController@show')->name('show');
 
     Route::get('/{name}/likes', 'UserController@likes')->name('likes');
-    
+
     Route::get('/{name}/followings', 'UserController@followings')->name('followings');
     Route::get('/{name}/followers', 'UserController@followers')->name('followers');
     // グループメソッドを使用する事で、middlewareが各ルーティングに適用される

@@ -18,7 +18,7 @@
                 <!-- methodでPATCHを入力する事で、以下の内容で送られる -->
                 <!-- input type="hidden" name="_method" value="PATCH" -->
                 @include('articles.form')
-                <button type="submit" class="btn blue-gradient btn-block">更新する</button>
+                <button type="submit" class="btn purple-gradient btn-block">更新する</button>
               </form>
             </div>
           </div>

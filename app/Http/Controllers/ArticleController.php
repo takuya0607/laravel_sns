@@ -20,7 +20,8 @@ class ArticleController extends Controller
     // 記事一覧画面の表示
     public function index()
     {
-      $articles = Article::all()->sortByDesc('created_at');
+      // loadメソッドに引数としてリレーション名を渡すと、リレーション先のテーブルからもデータを取得する
+      $articles = Article::all()->sortByDesc('created_at')->load(['user', 'likes', 'tags']); 
 
       // 第二引数の'articles'は任意での自作キー
       // キーに対してのvalueを$articlesで指定している

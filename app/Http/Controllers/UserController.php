@@ -13,7 +13,10 @@ class UserController extends Controller
     {
       // 変数$userに、$nameと一致するnameを代入する
       // ユーザーテーブルのnameはユニークなので、必ず1件になる
-        $user = User::where('name', $name)->first();
+        $user = User::where('name', $name)->first()
+        // loadメソッドでは、このように.区切りを使って、リレーション先の、さらにリレーション先をEagerロードできる
+        // 投稿者のユーザー、投稿にいいねしたユーザー、投稿につけられたタグ
+        ->load(['articles.user', 'articles.likes', 'articles.tags']);
 
         // ユーザーの投稿した記事モデルをコレクションで取得
         // sortByDescメソッドを使って投稿日(created_at)の降順にソートした上で、変数$articlesに代入
@@ -29,7 +32,9 @@ class UserController extends Controller
     {
         // 変数$userに、$nameと一致するnameを代入する
         // ユーザーテーブルのnameはユニークなので、必ず1件になる
-        $user = User::where('name', $name)->first();
+        $user = User::where('name', $name)->first()
+        // 投稿したユーザー、投稿にいいねしたユーザー、投稿につけられたタグ
+        ->load(['likes.user', 'likes.likes', 'likes.tags']);
 
         // ユーザーがいいねした記事モデルをコレクションで取得
         // likesはUser.phpで記述しているメソッドを表す
@@ -45,7 +50,8 @@ class UserController extends Controller
     {
         // 変数$userに、$nameと一致するnameを代入する
         // ユーザーテーブルのnameはユニークなので、必ず1件になる
-        $user = User::where('name', $name)->first();
+        $user = User::where('name', $name)->first()
+        ->load('followings.followers');
 
         // ユーザーがフォローしたユーザーモデルをコレクションで取得
         // ユーザーモデルの中から、フォローしているユーザーモデルを取得するイメージ
@@ -60,7 +66,8 @@ class UserController extends Controller
 
     public function followers(string $name)
     {
-        $user = User::where('name', $name)->first();
+        $user = User::where('name', $name)->first()
+        ->load('followers.followers');
 
         $followers = $user->followers->sortByDesc('created_at');
 

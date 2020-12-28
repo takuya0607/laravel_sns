@@ -11,19 +11,26 @@
           <div class="card-body text-center">
             <h2 class="h3 card-title text-center mt-2">ユーザー登録</h2>
 
-            <a href="{{ route('login.{provider}', ['provider' => 'google']) }}" class="btn btn-block btn-danger">
-              <i class="fab fa-google mr-1"></i>Googleで登録
-            </a>
-
             @include('error_card_list')
 
             <div class="card-text">
-              <form method="POST" action="{{ route('register') }}">
+              <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                 @csrf
+                <label for="file_photo" class="rounded-circle userProfileImg">
+                  <div class="userProfileImg_description">画像をアップロード</div>
+                  <i class="fab fa-instagram fa-3x"></i>
+                  <input type="file" id="file_photo" name="img_name">
+
+                </label>
+                <div class="userImgPreview" id="userImgPreview">
+                  <img id="thumbnail" class="userImgPreview_content" accept="image/*" src="">
+                  <p class="userImgPreview_text">画像をアップロード済み</p>
+                </div>
+
                 <div class="md-form">
                   <label for="name">ユーザー名</label>
                   <input class="form-control" type="text" id="name" name="name" required value="{{ old('name') }}">
-                  <small>英数字3〜16文字(登録後の変更はできません)</small>
+                  <small>英数字3〜16文字</small>
                 </div>
                 <div class="md-form">
                   <label for="email">メールアドレス</label>
@@ -38,9 +45,12 @@
                   <label for="password_confirmation">パスワード(確認)</label>
                   <input class="form-control" type="password" id="password_confirmation" name="password_confirmation" required>
                 </div>
-                <button class="btn btn-block purple-gradient mt-2 mb-2" type="submit">ユーザー登録</button>
+                <button class="btn btn-block aqua-gradient mt-2 mb-2" type="submit">ユーザー登録</button>
+                <a href="{{ route('login.{provider}', ['provider' => 'google']) }}" class="btn btn-block btn-danger">
+                  <i class="fab fa-google mr-1"></i>Googleで登録
+                </a>
               </form>
-
+              <br>
               <div class="mt-0">
                 <a href="{{ route('login') }}" class="card-text">ログインはこちら</a>
               </div>

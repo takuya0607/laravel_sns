@@ -13,12 +13,13 @@
             @include('error_card_list')
             <div class="card-text">
               <!-- 'article' => $articleと記載する事で、$articleのIDが入力される -->
-              <form method="POST" action="{{ route('articles.update', ['article' => $article]) }}">
+              <form method="POST" action="{{ route('articles.update', ['article' => $article]) }}" enctype="multipart/form-data">
+                @csrf
                 @method('PATCH')
                 <!-- methodでPATCHを入力する事で、以下の内容で送られる -->
                 <!-- input type="hidden" name="_method" value="PATCH" -->
                 @include('articles.form')
-                <button type="submit" class="btn purple-gradient btn-block">更新する</button>
+                <button type="submit" class="btn aqua-gradient btn-block">更新する</button>
               </form>
             </div>
           </div>

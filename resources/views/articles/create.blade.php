@@ -15,7 +15,7 @@
               <form method="POST" action="{{ route('articles.store') }}">
                 <!-- 記事更新画面と共有するため、別でbladeを用意 -->
                 @include('articles.form')
-                <button type="submit" class="btn purple-gradient btn-block">投稿する</button>
+                <button type="submit" class="btn aqua-gradient btn-block">投稿する</button>
               </form>
             </div>
           </div>

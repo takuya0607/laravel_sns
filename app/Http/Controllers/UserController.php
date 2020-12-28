@@ -4,7 +4,17 @@ namespace App\Http\Controllers;
 
 use App\User;
 
+use App\Http\Requests\ProfileRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+use Intervention\Image\Facades\Image;
+use App\Services\CheckExtensionServices; //追加
+use App\Services\FileUploadServices; //追加
+
+
+
+
 
 class UserController extends Controller
 {
@@ -28,6 +38,57 @@ class UserController extends Controller
         ]);
     }
 
+    public function edit(string $name)
+    {
+      $user = User::where('name', $name)->first();
+
+      return view('users.edit', [
+        'user' => $user,
+      ]);
+    }
+
+    public function update(ProfileRequest $request, string $name)
+    {
+        // findOrFail = userテーブル内に、指定のidがあれば
+        $user = User::where('name', $name)->first();
+
+        // // !is_null = img_nameが空でなければ
+        // if(!is_null($request['img_name'])){
+
+        //     // $imageFileにリクエストで送られた'img_name'を代入
+        //     $imageFile = $request['img_name'];
+
+        //     // FileUploadServicesクラスのfileUploadメソッドを使用する
+        //     // ①まずは拡張子を含んだファイル名を取得
+        //     // ②次に拡張子を除いたファイル名を取得
+        //     // ③拡張子を取得
+        //     // ④ファイル名_時間_拡張子として設定
+        //     // ⑤ファイルの存在自体を取得
+        //     // ⑥拡張子、ファイル名、ファイル本体の3つの変数を配列として$listに代入
+        //     dd($imageFile);
+        //     $list = FileUploadServices::fileUpload($imageFile);
+
+        //     // list関数を使い、3つの変数に分割
+        //     list($extension, $fileNameToStore, $fileData) = $list;
+
+        //     //拡張子ごとに base64エンコード実施
+        //     $data_url = CheckExtensionServices::checkExtension($fileData, $extension);
+
+        //     //画像アップロード(Imageクラス makeメソッドを使用)
+        //     $image = Image::make($data_url);
+
+        //     //画像を横400px, 縦400pxにリサイズし保存
+        //     $image->resize(400,400)->save(storage_path() . '/app/public/images/' . $fileNameToStore );
+
+        //     // DBの'img_name'に＄fileNameToStore＝ファイル名_時間_拡張子として保存
+        //     $user->img_name = $fileNameToStore;
+        // }
+
+        $user->name = $request->name;
+        $user->save();
+
+        return redirect()->route('articles.index');
+    }
     public function likes(string $name)
     {
         // 変数$userに、$nameと一致するnameを代入する

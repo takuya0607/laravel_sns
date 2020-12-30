@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-dark purple-gradient">
+<nav class="navbar navbar-expand navbar-dark aqua-gradient">
 
   <a class="navbar-brand" href="/"><i class="far fa-sticky-note mr-1"></i>Mutter</a>
 

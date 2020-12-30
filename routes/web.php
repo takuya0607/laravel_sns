@@ -48,6 +48,8 @@ Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
 
 Route::prefix('users')->name('users.')->group(function () {
     Route::get('/{name}', 'UserController@show')->name('show');
+    Route::get('/{name}/edit', 'UserController@edit')->name('edit');
+    Route::patch('/{name}/update', 'UserController@update')->name('update');
 
     Route::get('/{name}/likes', 'UserController@likes')->name('likes');
 

@@ -55,6 +55,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'alpha_num', 'min:3', 'max:16', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'img_name' => ['file', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2000'],
         ]);
     }
 
@@ -66,11 +67,27 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+      // もし'img_name'があれば
+      if (isset($data['img_name'])) {
+
+        $fileName = $data['img_name']->getClientOriginalName();
+        $imagePath = $data['img_name']->storeAs('public/images/', $fileName);
+
+        //createメソッドでユーザー情報を作成
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'img_name' => basename($fileName)
+        ]);
+        }else{
+        // 'img_nameが空だったら'
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+          }
     }
 
     public function showProviderUserRegistrationForm(Request $request, string $provider)

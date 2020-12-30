@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rule; // ここを追加
 
 class ProfileRequest extends FormRequest
 {
@@ -24,10 +24,9 @@ class ProfileRequest extends FormRequest
      */
     public function rules()
     {
-      return [
-          'name' => 'required', 'string', 'alpha_num', 'min:3', 'max:16', 'unique:users',
-          ];
+        return [
+            //
+            'name' => ['required', 'string', 'alpha_num', 'min:3', 'max:16',]
+        ];
     }
 }
-
-

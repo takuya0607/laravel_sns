@@ -1,7 +1,11 @@
 <div class="card mt-3">
   <div class="card-body d-flex flex-row">
     <a href="{{ route('users.show', ['name' => $article->user->name]) }}" class="text-dark">
-      <i class="fas fa-user-circle fa-3x mr-1"></i>
+      @isset($article->user->img_name)
+        <img src="/storage/images/{{$article->user->img_name}}" class="rounded-circle userProfileImgIcon">
+      @else
+        <i class="fas fa-user-circle fa-3x mr-2"></i>
+      @endisset
     </a>
     <div>
       <a href="{{ route('users.show', ['name' => $article->user->name]) }}" class="text-dark">

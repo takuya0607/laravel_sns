@@ -11,12 +11,16 @@
           <div class="card-body text-center">
             @include('error_card_list')
             <div class="card-text">
-              <form method="POST" action="{{ route('users.update' , ['name' => $user->name]) }}">
+              <form method="POST" action="{{ route('users.update' , ['name' => $user->name]) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PATCH')
                 <label for="file_photo" class="rounded-circle userProfileImg">
                   <div class="userProfileImg_description">画像をアップロード</div>
-                  <i class="fas fa-camera fa-3x"></i>
+                  @isset($user->img_name)
+                    <img src="/storage/images/{{$user->img_name}}" class="rounded-circle userProfileImgIconEdit">
+                  @else
+                    <i class="fab fa-instagram fa-3x"></i>
+                  @endisset
                   <input type="file" id="file_photo" name="img_name">
 
                 </label>
@@ -38,6 +42,7 @@
     </div>
   </div>
 @endsection
+
 
 
 

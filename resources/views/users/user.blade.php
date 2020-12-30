@@ -4,9 +4,10 @@
       <div>
         <a href="{{ route('users.show', ['name' => $user->name]) }}" class="text-dark">
           @isset($user->img_name)
-            <img src="/storage/images/{{$user->img_name}}">
-          @endisset
+            <img src="/storage/images/{{$user->img_name}}" class="rounded-circle userProfileImgIcon">
+          @else
             <i class="fas fa-user-circle fa-3x"></i>
+          @endisset
         </a>
       </div>
       @if( Auth::id() == $user->id )

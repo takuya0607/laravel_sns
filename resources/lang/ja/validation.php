@@ -78,7 +78,7 @@ return [
     ],
     'max'                  => [
         'numeric' => ':attributeには、:max以下の数字を指定してください。',
-        'file'    => ':attributeには、:max kB以下のファイルを指定してください。',
+        'file'    => ':attributeには、:max KB以下のファイルを指定してください。',
         'string'  => ':attributeは、:max文字以下で指定してください。',
         'array'   => ':attributeは:max個以下指定してください。',
     ],
@@ -116,6 +116,7 @@ return [
     'uploaded'             => ':attributeのアップロードに失敗しました。',
     'url'                  => ':attributeに正しい形式を指定してください。',
     'uuid'                 => ':attributeに有効なUUIDを指定してください。',
+    'alpha_num_check' => ':attribute は半角英数字で入力してください',
 
     /*
     |--------------------------------------------------------------------------
@@ -149,6 +150,7 @@ return [
         'name' => 'ユーザー名',
         'email' => 'メールアドレス',
         'password' => 'パスワード',
+        'img_name' => '写真',
     ],
 
 ];

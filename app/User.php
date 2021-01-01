@@ -52,6 +52,14 @@ class User extends Authenticatable
         return $this->hasMany('App\Article');
     }
 
+    public function comments(): BelongsToMany
+    {
+        // 記事に対してコメントをしているユーザーを取得するメソッド
+        // 第二引数で中間テーブルの名前を指定してあげる
+        // ->withTimestampsを入力する事で、中間テーブルにも日付が反映される
+        return $this->belongsToMany('App\Article', 'comments')->withTimestamps();
+    }
+
     public function followers(): BelongsToMany
     {
       // タグやlikeの時は、中間テーブルのカラム名がリレーション元/先のテーブル名の単数形_idだった。

@@ -20,6 +20,21 @@ class Article extends Model
         return $this->belongsTo('App\User');
     }
 
+    public function comments(): BelongsToMany
+    {
+        // ユーザーがコメントした記事を取得するメソッド
+        // 第二引数で中間テーブルの名前を指定してあげる
+        // ->withTimestampsを入力する事で、中間テーブルにも日付が反映される
+        return $this->belongsToMany('App\User', 'comments')->withTimestamps();
+    }
+
+    // $article_id = 記事のid
+    // userテーブルのユーザーidに紐づいた記事の取得？
+    public function getArticle(Int $article_id)
+    {
+        return $this->with('user')->where('id', $article_id)->first();
+    }
+
     public function likes(): BelongsToMany
     {
         // 記事に対していいねをしているユーザーを取得するメソッド

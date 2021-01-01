@@ -71,8 +71,8 @@
       {{ $article->body }}
     </div>
   </div>
-  <div class="card-body pt-0 pb-2 pl-3">
-    <div class="card-text">
+  <div class="card-body pt-0 pb-2 pl-3 ">
+    <div class="card-text d-flex justify-content-start">
       <!-- initial-is-liked-byはv-bind:initial-is-liked-byの省略形 -->
       <!-- jsonを使用する事で、結果を値ではなく文字列でVueに渡している -->
       <!-- authorized=承認する ユーザーがログインしている状態のみを許容 -->
@@ -84,7 +84,14 @@
         endpoint="{{ route('articles.like', ['article' => $article]) }}"
       >
       </article-like>
+      <a href="{{ route('articles.show', ['article' => $article]) }}">
+        <i class="fas fa-comment ml-3" style="margin-top:6px;"></i>
+      </a>
+      <div class="card-text ml-2" style="margin-top:2px;">
+        {{ count($article->comments) }}
+      </div>
     </div>
+
   </div>
   @foreach($article->tags as $tag)
   <!-- $loopは、foreachの中で使える変数 -->

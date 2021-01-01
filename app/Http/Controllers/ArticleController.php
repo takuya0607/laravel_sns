@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Tag;
+use App\Comment;
 // Requestの使用宣言
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Http\Request;
@@ -18,15 +19,17 @@ class ArticleController extends Controller
     }
 
     // 記事一覧画面の表示
-    public function index()
+    public function index(Article $article, Comment $comment)
     {
       // loadメソッドに引数としてリレーション名を渡すと、リレーション先のテーブルからもデータを取得する
-      $articles = Article::all()->sortByDesc('created_at')->load(['user', 'likes', 'tags']); 
+      $articles = Article::all()->sortByDesc('created_at')->load(['user', 'likes', 'tags']);
 
       // 第二引数の'articles'は任意での自作キー
       // キーに対してのvalueを$articlesで指定している
       // これによりbladeで'articles'が使用できる。
-      return view('articles.index', ['articles' => $articles]);
+      return view('articles.index', [
+        'articles' => $articles,
+        ]);
     }
 
     // 記事投稿作成画面の表示
@@ -75,6 +78,18 @@ class ArticleController extends Controller
         return redirect()->route('articles.index');
     }
 
+    public function show(Article $article, Comment $comment)
+    {
+        $user = auth()->user();
+        $article = $article->getArticle($article->id);
+        $comments = $comment->getComments($article->id);
+        return view('articles.show', [
+          'user'     => $user,
+          'article' => $article,
+          'comments' => $comments
+          ]);
+    }
+
     public function edit(Article $article)
     {
         $tagNames = $article->tags->map(function ($tag) {
@@ -114,10 +129,7 @@ class ArticleController extends Controller
         return redirect()->route('articles.index');
     }
 
-    public function show(Article $article)
-    {
-        return view('articles.show', ['article' => $article]);
-    }
+
 
     // いいねに関する記述
     public function like(Request $request, Article $article)

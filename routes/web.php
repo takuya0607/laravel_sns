@@ -63,3 +63,5 @@ Route::prefix('users')->name('users.')->group(function () {
 });
 
 Route::resource('comments', 'CommentsController', ['only' => ['store']])->middleware('auth');
+
+Route::get('/search', 'SearchController@search')->name('search');

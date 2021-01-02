@@ -8,6 +8,5 @@
   <div class="container">
     @include('articles.card')
   </div>
-  <br>
-    @include('comments.comment')
+  @include('comments.comment')
 @endsection

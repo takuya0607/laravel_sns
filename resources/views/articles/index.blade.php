@@ -4,6 +4,7 @@
 
 @section('content')
   @include('nav')
+  @auth
   <div class="container">
     @include('search_form')
     @foreach($articles as $article)
@@ -11,4 +12,5 @@
     @endforeach
   </div>
   @include('footer')
+  @endauth
 @endsection

@@ -21,11 +21,11 @@
                   @else
                     <i class="fab fa-instagram fa-3x"></i>
                   @endisset
-                  <input type="file" id="file_photo" name="img_name">
+                  <input type="file" id="file_photo" name="img_name" accept="image/*">
 
                 </label>
                 <div class="userImgPreview" id="userImgPreview">
-                  <img id="thumbnail" class="userImgPreview_content" accept="image/*" src="">
+                  <img id="thumbnail" class="userImgPreview_content" accept="image/*" autocomplete="image" src="">
                   <p class="userImgPreview_text">画像をアップロード済み</p>
                 </div>
                 <div class="md-form">

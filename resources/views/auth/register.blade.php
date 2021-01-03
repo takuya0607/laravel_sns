@@ -6,7 +6,7 @@
   <div class="container">
     <div class="row">
       <div class="mx-auto col col-12 col-sm-11 col-md-9 col-lg-7 col-xl-6">
-        <h1 class="text-center"><a class="text-dark" href="/">Mutter</a></h1>
+        <h1 class="text-center"><i class="fas fa-blog mr-1"></i><a class="text-dark" href="/"></a></h1>
         <div class="card mt-3">
           <div class="card-body text-center">
             <h2 class="h3 card-title text-center mt-2">ユーザー登録</h2>
@@ -16,17 +16,9 @@
             <div class="card-text">
               <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                 @csrf
-                <label for="file_photo" class="rounded-circle userProfileImg">
-                  <div class="userProfileImg_description">画像をアップロード</div>
-                  <i class="fab fa-instagram fa-3x"></i>
-                  <input type="file" id="file_photo" name="img_name">
-
-                </label>
-                <div class="userImgPreview" id="userImgPreview">
-                  <img id="thumbnail" class="userImgPreview_content" accept="image/*" src="">
-                  <p class="userImgPreview_text">画像をアップロード済み</p>
+                <div class="text-dark">
+                  <i class="fas fa-user-circle fa-5x mr-2"></i>
                 </div>
-
                 <div class="md-form">
                   <label for="name">ユーザー名</label>
                   <input class="form-control" type="text" id="name" name="name" required value="{{ old('name') }}">

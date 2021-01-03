@@ -56,7 +56,7 @@ class UserController extends Controller
         // if emptyで$request->imageが空であるか確認する。
         // これで画像を差し替えていない場合、元の画像がそのまま選択される
         if (empty($request->img_name) == false) {
-          if ($request ->file('img_name')->isValid([])) {
+          if ($request->file('img_name')->isValid([])) {
           $user->img_name = $request->img_name->getClientOriginalName();
           $fileName = $request->file('img_name')->getClientOriginalName();
           $imagePath = $request->img_name->storeAs('public/images/', $fileName);
@@ -67,6 +67,14 @@ class UserController extends Controller
 
         return redirect()->route('articles.index');
     }
+
+    public function destroy(User $user, string $name)
+    {
+      $user = User::where('name', $name)->first();
+      $user->delete();
+      return redirect('/');
+    }
+
     public function likes(string $name)
     {
         // 変数$userに、$nameと一致するnameを代入する

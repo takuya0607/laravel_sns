@@ -74,8 +74,8 @@
     <div class="card mt-3">
       <div class="card-body d-flex flex-row">
         <a href="{{ route('users.show', ['name' => $searched_article->user->name]) }}" class="text-dark">
-          @isset($searched_user->img_name)
-            <img src="/storage/images/{{$searched_article->img_name}}" class="rounded-circle userProfileImgIcon">
+          @isset($searched_article->user->img_name)
+            <img src="/storage/images/{{$searched_article->user->img_name}}" class="rounded-circle userProfileImgIcon">
           @else
             <i class="fas fa-user-circle fa-3x mr-2"></i>
           @endisset

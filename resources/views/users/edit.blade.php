@@ -21,17 +21,17 @@
                   @else
                     <i class="fab fa-instagram fa-3x"></i>
                   @endisset
-                  <input type="file" id="file_photo" name="img_name">
+                  <input type="file" id="file_photo" name="img_name" accept="image/*">
 
                 </label>
                 <div class="userImgPreview" id="userImgPreview">
-                  <img id="thumbnail" class="userImgPreview_content" accept="image/*" src="">
+                  <img id="thumbnail" class="userImgPreview_content" accept="image/*" autocomplete="image" src="">
                   <p class="userImgPreview_text">画像をアップロード済み</p>
                 </div>
                 <div class="md-form">
                   <label for="name">ユーザー名</label>
                   <input class="form-control" type="text" id="name" name="name" required value="{{ $user->name }}">
-                  <small>英数字3〜16文字</small>
+                  <small>3〜16文字</small>
                 </div>
                 <button class="btn btn-block aqua-gradient mt-2 mb-2" type="submit">更新する</button>
               </form>

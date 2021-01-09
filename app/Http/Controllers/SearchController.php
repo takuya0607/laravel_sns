@@ -21,7 +21,7 @@ class SearchController extends Controller
         return view('search.index', compact(
           'searched_users',
           'searched_articles',
-          'user'
+          'user',
         ));
     }
 }

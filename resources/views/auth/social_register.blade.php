@@ -21,7 +21,7 @@
                 <div class="md-form">
                   <label for="name">ユーザー名</label>
                   <input class="form-control" type="text" id="name" name="name" required>
-                  <small>英数字3〜16文字(登録後の変更はできません)</small>
+                  <small>3〜16文字(登録後の変更はできません)</small>
                 </div>
                 <div class="md-form">
                   <label for="email">メールアドレス</label>

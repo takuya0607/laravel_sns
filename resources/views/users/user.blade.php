@@ -10,7 +10,9 @@
           @endisset
         </a>
       </div>
+
       @if( Auth::id() == $user->id )
+      <!-- dropdown -->
       <div class="dropdown">
         <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-ellipsis-v"></i>
@@ -19,13 +21,42 @@
           <a class="dropdown-item" href="{{ route('users.edit', ['name' => $user->name]) }}">
             <i class="fas fa-pen mr-1"></i>プロフィールを編集する
           </a>
+          <!-- destroyの記述 -->
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item text-danger" data-toggle="modal" data-target="/">
+          <a class="dropdown-item text-danger" data-toggle="modal" data-target="#modal-delete-{{ $user->id }}">
             <i class="fas fa-trash-alt mr-1"></i>プロフィールを削除する
           </a>
+          <!-- destroyの記述 -->
         </div>
       </div>
+      <!-- dropdown -->
       @endif
+
+      <!-- modal -->
+      <div id="modal-delete-{{ $user->id }}" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <form method="POST" action="{{ route('users.destroy', ['name' => $user->name]) }}">
+              @csrf
+              @method('DELETE')
+              <div class="modal-body">
+                アカウントを削除します。本当によろしいですか？
+              </div>
+              <div class="modal-footer justify-content-between">
+                <a class="btn btn-outline-grey" data-dismiss="modal">キャンセル</a>
+                <button type="submit" class="btn btn-danger">削除する</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- modal -->
+
       @if( Auth::id() !== $user->id )
         <follow-button
           class="ml-auto"
@@ -53,3 +84,5 @@
     </div>
   </div>
 </div>
+
+

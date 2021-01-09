@@ -6,11 +6,12 @@
   @include('nav')
   <div class="container">
     @include('search_form')
-    <br>
+    @if(count($searched_users) >= 1)
+      <div style="width:40%; height:40px;">
+      <p style="line-height:40px; font-weight:bold; font-size:22px">ユーザー 一覧</p>
+      </div>
+    @endif
     @foreach ($searched_users as $searched_user)
-    @isset($search_result)
-      <h5 style="margin-top:2%; text-align: center;">{{$search_result}}</h5>
-    @endisset
     <div class="card mt-3">
       <div class="card-body">
         <div class="d-flex justify-content-between">
@@ -70,12 +71,17 @@
   </div>
   <br>
   <div class="container">
+    @if(count($searched_articles) >= 1)
+      <div style="width:30%; height:40px;">
+        <p style="line-height:40px; font-weight:bold; font-size:22px">投稿一覧</p>
+      </div>
+    @endif
     @foreach ($searched_articles as $searched_article)
     <div class="card mt-3">
       <div class="card-body d-flex flex-row">
         <a href="{{ route('users.show', ['name' => $searched_article->user->name]) }}" class="text-dark">
-          @isset($searched_user->img_name)
-            <img src="/storage/images/{{$searched_article->img_name}}" class="rounded-circle userProfileImgIcon">
+          @isset($searched_article->user->img_name)
+            <img src="/storage/images/{{$searched_article->user->img_name}}" class="rounded-circle userProfileImgIcon">
           @else
             <i class="fas fa-user-circle fa-3x mr-2"></i>
           @endisset
@@ -167,4 +173,5 @@
     </div>
     @endforeach
   </div>
+
 @endsection

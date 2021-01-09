@@ -13,4 +13,5 @@
       @include('users.person')
     @endforeach
   </div>
+  <div class="my-4 d-flex justify-content-center"></div>
 @endsection

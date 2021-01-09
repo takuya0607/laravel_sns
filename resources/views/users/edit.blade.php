@@ -31,7 +31,7 @@
                 <div class="md-form">
                   <label for="name">ユーザー名</label>
                   <input class="form-control" type="text" id="name" name="name" required value="{{ $user->name }}">
-                  <small>英数字3〜16文字</small>
+                  <small>3〜16文字</small>
                 </div>
                 <button class="btn btn-block aqua-gradient mt-2 mb-2" type="submit">更新する</button>
               </form>

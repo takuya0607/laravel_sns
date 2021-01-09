@@ -22,13 +22,13 @@ class ArticleController extends Controller
     public function index(Article $article, Comment $comment)
     {
       // loadメソッドに引数としてリレーション名を渡すと、リレーション先のテーブルからもデータを取得する
-      $articles = Article::all()->sortByDesc('created_at')->load(['user', 'likes', 'tags']);
+      $all_articles = $article->orderBy('created_at', 'DESC')->paginate(5);
 
       // 第二引数の'articles'は任意での自作キー
       // キーに対してのvalueを$articlesで指定している
       // これによりbladeで'articles'が使用できる。
       return view('articles.index', [
-        'articles' => $articles,
+        'articles' => $all_articles,
         ]);
     }
 

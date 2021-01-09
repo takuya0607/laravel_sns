@@ -22,7 +22,7 @@
                 <div class="md-form">
                   <label for="name">ユーザー名</label>
                   <input class="form-control" type="text" id="name" name="name" required value="{{ old('name') }}">
-                  <small>英数字3〜16文字</small>
+                  <small>3〜16文字</small>
                 </div>
                 <div class="md-form">
                   <label for="email">メールアドレス</label>

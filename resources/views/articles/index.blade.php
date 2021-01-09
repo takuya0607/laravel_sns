@@ -11,6 +11,8 @@
       @include('articles.card')
     @endforeach
   </div>
-  @include('footer')
+  <div class="my-4 d-flex justify-content-center">
+    {{ $articles->links() }}
+  </div>
   @endauth
 @endsection
